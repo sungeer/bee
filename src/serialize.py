@@ -1,5 +1,3 @@
-#!/usr/bin/env python
-# -*- coding:utf-8 -*-
 import json as default_json
 from json.encoder import JSONEncoder
 

@@ -1,6 +1,7 @@
-#!/usr/bin/env python
-# -*- coding:utf-8 -*-
 import os
+
+# 应用版本
+VERSION = '26.0903.0720'
 
 # 项目根目录（本文件位于 src/ 下，父目录的父目录即项目根）
 BASEDIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))

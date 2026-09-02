@@ -1,7 +1,3 @@
-#!/usr/bin/env python
-# -*- coding:utf-8 -*-
-
-
 def convert_to_int(value, default=0):
     try:
         result = int(value)

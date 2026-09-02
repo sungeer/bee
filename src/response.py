@@ -1,7 +1,3 @@
-#!/usr/bin/env python
-# -*- coding:utf-8 -*-
-
-
 class BaseResponse(object):
     """采集 / 执行的统一返回容器"""
 
