@@ -1,5 +1,4 @@
-class BaseResponse(object):
-    """采集 / 执行的统一返回容器"""
+class BaseResponse:
 
     def __init__(self):
         self.status = True

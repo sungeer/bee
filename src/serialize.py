@@ -5,7 +5,9 @@ from src.response import BaseResponse
 
 
 class JsonEncoder(JSONEncoder):
-    """将 BaseResponse 序列化为其 __dict__，用于拼接采集上报数据"""
+    """将 BaseResponse 序列化为其 __dict__
+    用于拼接采集上报数据
+    """
 
     def default(self, o):
         if isinstance(o, BaseResponse):
@@ -13,7 +15,7 @@ class JsonEncoder(JSONEncoder):
         return JSONEncoder.default(self, o)
 
 
-class Json(object):
+class Json:
 
     @staticmethod
     def dumps(response, ensure_ascii=True):

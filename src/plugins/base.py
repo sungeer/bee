@@ -6,7 +6,7 @@ from src.logger import Logger
 from src.response import BaseResponse
 
 
-class BasePlugin(object):
+class BasePlugin:
     """插件基类：统一命令执行方式与采集异常的返回容器。
 
     子类只需实现 collect()，返回解析后的数据(dict/list)即可；

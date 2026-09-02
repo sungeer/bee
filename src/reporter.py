@@ -8,8 +8,10 @@ from src.logger import Logger
 from src.serialize import Json
 
 
-class AssetAPI(object):
-    """资产 API 客户端：认证、拉取待采集主机、提交采集结果"""
+class AssetAPI:
+    """资产 API 客户端
+    认证 拉取待采集主机 提交采集结果
+    """
 
     def __init__(self):
         self.api = settings.ASSET_API

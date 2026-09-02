@@ -4,7 +4,7 @@ import os
 from src import settings
 
 
-class Logger(object):
+class Logger:
     """采集日志单例：运行日志与错误日志分开落盘"""
 
     __instance = None
