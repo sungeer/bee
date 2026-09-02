@@ -1,7 +1,7 @@
 import os
 
 # 应用版本
-VERSION = '26.0903.0720'
+VERSION = '26.0903.0723'
 
 # 项目根目录（本文件位于 src/ 下，父目录的父目录即项目根）
 BASEDIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -12,8 +12,8 @@ KEY = '299095cc-1330-11e5-b06a-a45e60bec08b'
 AUTH_KEY_NAME = 'auth-key'
 
 # 错误日志 / 运行日志
-ERROR_LOG_FILE = os.path.join(BASEDIR, 'log', 'error.log')
-RUN_LOG_FILE = os.path.join(BASEDIR, 'log', 'run.log')
+ERROR_LOG_FILE = os.path.join(BASEDIR, 'logs', 'error.log')
+RUN_LOG_FILE = os.path.join(BASEDIR, 'logs', 'run.log')
 
 # Agent 模式保存服务器唯一 ID 的文件
 CERT_FILE_PATH = os.path.join(BASEDIR, 'config', 'cert')
