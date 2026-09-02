@@ -1,16 +1,13 @@
 #!/usr/bin/env python
 # -*- coding:utf-8 -*-
-import traceback
 from .base import BasePlugin
-from lib.response import BaseResponse
 
 
 class BasicPlugin(BasePlugin):
+    """采集系统平台、版本与主机名"""
+
     def os_platform(self):
-        """
-        获取系统平台
-        :return:
-        """
+        """获取系统平台"""
         if self.test_mode:
             output = 'linux'
         else:
@@ -18,42 +15,24 @@ class BasicPlugin(BasePlugin):
         return output.strip()
 
     def os_version(self):
-        """
-        获取系统版本
-        :return:
-        """
+        """获取系统版本（样例数据与真实输出一致时只取第一行）"""
         if self.test_mode:
-            output = """CentOS release 6.6 (Final)\nKernel \r on an \m"""
+            output = 'CentOS release 6.6 (Final)\nKernel \r on an \\m'
         else:
             output = self.exec_shell_cmd('cat /etc/issue')
-        result = output.strip().split('\n')[0]
-        return result
+        return output.strip().split('\n')[0]
 
     def os_hostname(self):
-        """
-        获取主机名
-        :return:
-        """
+        """获取主机名"""
         if self.test_mode:
             output = 'c1.com'
         else:
             output = self.exec_shell_cmd('hostname')
         return output.strip()
 
-    def linux(self):
-        response = BaseResponse()
-        try:
-            ret = {
-                'os_platform': self.os_platform(),
-                'os_version': self.os_version(),
-                'hostname': self.os_hostname(),
-            }
-            response.data = ret
-        except Exception as e:
-            msg = "%s BasicPlugin Error:%s"
-            self.logger.log(msg % (self.hostname, traceback.format_exc()), False)
-            response.status = False
-            response.error = msg % (self.hostname, traceback.format_exc())
-
-        return response
-
+    def collect(self):
+        return {
+            'os_platform': self.os_platform(),
+            'os_version': self.os_version(),
+            'hostname': self.os_hostname(),
+        }

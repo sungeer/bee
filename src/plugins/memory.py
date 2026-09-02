@@ -1,32 +1,15 @@
 #!/usr/bin/env python
 # -*- coding:utf-8 -*-
-
-
-import os
-import traceback
-from lib import convert
+from src import convert
 from .base import BasePlugin
-from lib.response import BaseResponse
 
 
 class MemoryPlugin(BasePlugin):
-    def linux(self):
-        response = BaseResponse()
-        try:
-            if self.test_mode:
-                from config.settings import BASEDIR
+    """解析 dmidecode -t 17 的内存条信息输出"""
 
-                output = open(os.path.join(BASEDIR, 'files/memory.out'), 'r').read()
-            else:
-                shell_command = "sudo dmidecode  -q -t 17 2>/dev/null"
-                output = self.exec_shell_cmd(shell_command)
-            response.data = self.parse(output)
-        except Exception as e:
-            msg = "%s linux memory plugin error: %s"
-            self.logger.log(msg % (self.hostname, traceback.format_exc()), False)
-            response.status = False
-            response.error = msg % (self.hostname, traceback.format_exc())
-        return response
+    def collect(self):
+        output = self.capture('sudo dmidecode -q -t 17 2>/dev/null', 'memory.out')
+        return self.parse(output)
 
     def parse(self, content):
         """
@@ -42,7 +25,6 @@ class MemoryPlugin(BasePlugin):
             'Speed': 'speed',
             'Manufacturer': 'manufacturer',
             'Serial Number': 'sn',
-
         }
         devices = content.split('Memory Device')
         for item in devices:
@@ -58,7 +40,7 @@ class MemoryPlugin(BasePlugin):
                     key, value = line.split(':')
                 else:
                     key = line.split(':')[0]
-                    value = ""
+                    value = ''
                 if key in key_map:
                     if key == 'Size':
                         segment[key_map['Size']] = convert.convert_mb_to_gb(value, 0)
@@ -67,4 +49,3 @@ class MemoryPlugin(BasePlugin):
             ram_dict[segment['slot']] = segment
 
         return ram_dict
-

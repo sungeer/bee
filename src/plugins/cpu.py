@@ -1,29 +1,14 @@
 #!/usr/bin/env python
 # -*- coding:utf-8 -*-
-import os
-import traceback
 from .base import BasePlugin
-from lib.response import BaseResponse
 
 
 class CpuPlugin(BasePlugin):
-    def linux(self):
-        response = BaseResponse()
-        try:
-            if self.test_mode:
-                from config.settings import BASEDIR
+    """解析 /proc/cpuinfo，统计 CPU 核数、物理颗数与型号"""
 
-                output = open(os.path.join(BASEDIR, 'files/cpuinfo.out'), 'r').read()
-            else:
-                shell_command = "cat /proc/cpuinfo"
-                output = self.exec_shell_cmd(shell_command)
-            response.data = self.parse(output)
-        except Exception as e:
-            msg = "%s linux cpu plugin error: %s"
-            self.logger.log(msg % (self.hostname, traceback.format_exc()), False)
-            response.status = False
-            response.error = msg % (self.hostname, traceback.format_exc())
-        return response
+    def collect(self):
+        output = self.capture('cat /proc/cpuinfo', 'cpuinfo.out')
+        return self.parse(output)
 
     @staticmethod
     def parse(content):
@@ -51,4 +36,3 @@ class CpuPlugin(BasePlugin):
         response['cpu_physical_count'] = len(cpu_physical_set)
 
         return response
-

@@ -1,32 +1,16 @@
 #!/usr/bin/env python
 # -*- coding:utf-8 -*-
-import os
-import traceback
 from .base import BasePlugin
-from lib.response import BaseResponse
 
 
 class MainBoardPlugin(BasePlugin):
-    def linux(self):
-        response = BaseResponse()
-        try:
-            if self.test_mode:
-                from config.settings import BASEDIR
+    """解析 dmidecode -t1 的主板信息输出"""
 
-                output = open(os.path.join(BASEDIR, 'files/board.out'), 'r').read()
-            else:
-                shell_command = "sudo dmidecode -t1"
-                output = self.exec_shell_cmd(shell_command)
-            response.data = self.parse(output)
-        except Exception as e:
-            msg = "%s linux mainboard plugin error: %s"
-            self.logger.log(msg %(self.hostname, traceback.format_exc()), False)
-            response.status = False
-            response.error = msg %(self.hostname, traceback.format_exc())
-        return response
+    def collect(self):
+        output = self.capture('sudo dmidecode -t1', 'board.out')
+        return self.parse(output)
 
     def parse(self, content):
-
         result = {}
         key_map = {
             'Manufacturer': 'manufacturer',

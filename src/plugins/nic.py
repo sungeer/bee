@@ -1,35 +1,21 @@
 #!/usr/bin/env python
 # -*- coding:utf-8 -*-
-import re
 import os
-import traceback
+import re
+
 from .base import BasePlugin
-from lib.response import BaseResponse
 
 
 class NicPlugin(BasePlugin):
-    def linux(self):
-        response = BaseResponse()
-        try:
+    """解析 ip link/addr 输出的网卡信息"""
 
-            if self.test_mode:
-                from config.settings import BASEDIR
-
-                output = open(os.path.join(BASEDIR, 'files/nic.out'), 'r').read()
-                interfaces_info = self._interfaces_ip(output)
-
-            else:
-                interfaces_info = self.linux_interfaces()
-
-            self.standard(interfaces_info)
-            response.data = interfaces_info
-        except Exception as e:
-            msg = "%s linux nic plugin error: %s"
-            self.logger.log(msg % (self.hostname, traceback.format_exc()), False)
-            response.status = False
-            response.error = msg % (self.hostname, traceback.format_exc())
-
-        return response
+    def collect(self):
+        if self.test_mode:
+            interfaces_info = self._interfaces_ip(self.read_fixture('nic.out'))
+        else:
+            interfaces_info = self.linux_interfaces()
+        self.standard(interfaces_info)
+        return interfaces_info
 
     def linux_interfaces(self):
         '''
@@ -207,11 +193,10 @@ class NicPlugin(BasePlugin):
         return ret
 
     def standard(self, interfaces_info):
-
         for key, value in interfaces_info.items():
             ipaddrs = set()
             netmask = set()
-            if not 'inet' in value:
+            if 'inet' not in value:
                 value['ipaddrs'] = ''
                 value['netmask'] = ''
             else:
@@ -221,5 +206,3 @@ class NicPlugin(BasePlugin):
                 value['ipaddrs'] = '/'.join(ipaddrs)
                 value['netmask'] = '/'.join(netmask)
                 del value['inet']
-
-

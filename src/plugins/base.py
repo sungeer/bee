@@ -1,21 +1,32 @@
 #!/usr/bin/env python
 # -*- coding:utf-8 -*-
-from lib.log import Logger
-from config import settings
+import os
+import traceback
+
+from src import settings
+from src.logger import Logger
+from src.response import BaseResponse
 
 
 class BasePlugin(object):
+    """插件基类：统一命令执行方式与采集异常的返回容器。
+
+    子类只需实现 collect()，返回解析后的数据(dict/list)即可；
+    shell 命令在本地/ssh/salt 间切换、测试模式读样例文件、异常转 BaseResponse
+    等通用逻辑都收敛在本类。
+    """
+
+    VALID_MODES = ('agent', 'ssh', 'salt')
+
     def __init__(self, hostname=''):
         self.logger = Logger()
         self.test_mode = settings.TEST_MODE
-        self.mode_list = ['agent', 'salt', 'ssh']
-        if hasattr(settings, 'MODE'):
-            self.mode = settings.MODE
-        else:
-            self.mode = 'agent'
+        self.mode = getattr(settings, 'MODE', 'agent')
         self.hostname = hostname
 
-    def salt(self, cmd, ):
+    # ----- 命令执行：按采集方式分派 -----
+
+    def salt(self, cmd):
         import salt.client
 
         local = salt.client.LocalClient()
@@ -41,14 +52,39 @@ class BasePlugin(object):
         return output
 
     def exec_shell_cmd(self, cmd):
-        if self.mode not in self.mode_list:
-            raise Exception("settings.mode must be one of ['agent', 'salt', 'ssh']")
+        """按 settings.MODE 选择执行方式运行 shell 命令"""
+        if self.mode not in self.VALID_MODES:
+            raise ValueError("settings.MODE must be one of ['agent', 'salt', 'ssh']")
         func = getattr(self, self.mode)
-        output = func(cmd)
-        return output
+        return func(cmd)
+
+    # ----- 样例数据 / 采集样板 -----
+
+    def read_fixture(self, fixture):
+        """读取 files/ 目录下的样例输出（测试模式使用）"""
+        path = os.path.join(settings.BASEDIR, 'files', fixture)
+        with open(path, encoding='utf-8') as f:
+            return f.read()
+
+    def capture(self, command, fixture):
+        """获取原始输出：测试模式读样例文件，否则执行真实 shell 命令"""
+        if self.test_mode:
+            return self.read_fixture(fixture)
+        return self.exec_shell_cmd(command)
 
     def execute(self):
-        return self.linux()
+        """对外采集入口：调用 collect()，把异常统一封装成 BaseResponse"""
+        response = BaseResponse()
+        try:
+            response.data = self.collect()
+        except Exception:
+            message = '%s %s plugin error: %s' % (
+                self.hostname, type(self).__name__, traceback.format_exc())
+            self.logger.log(message, False)
+            response.status = False
+            response.error = message
+        return response
 
-    def linux(self):
-        raise Exception('You must implement linux method.')
+    def collect(self):
+        """子类实现采集逻辑；异常由 execute() 统一处理"""
+        raise NotImplementedError('You must implement collect method.')
