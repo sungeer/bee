@@ -1,7 +1,7 @@
 import json as default_json
 from json.encoder import JSONEncoder
 
-from src.response import BaseResponse
+from src.common.response import BaseResponse
 
 
 class JsonEncoder(JSONEncoder):

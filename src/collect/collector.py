@@ -1,7 +1,7 @@
 import importlib
 
 from src import settings
-from src.plugins.basic import BasicPlugin
+from src.collect.plugins.basic import BasicPlugin
 
 
 def collect_asset(hostname=None):

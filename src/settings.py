@@ -34,11 +34,11 @@ SSH_PORT = 22
 
 # 采集硬件数据的插件：名称 -> 插件类路径，新增采集项在此注册
 PLUGINS_DICT = {
-    'cpu': 'src.plugins.cpu.CpuPlugin',
-    'disk': 'src.plugins.disk.DiskPlugin',
-    'main_board': 'src.plugins.main_board.MainBoardPlugin',
-    'memory': 'src.plugins.memory.MemoryPlugin',
-    'nic': 'src.plugins.nic.NicPlugin',
+    'cpu': 'src.collect.plugins.cpu.CpuPlugin',
+    'disk': 'src.collect.plugins.disk.DiskPlugin',
+    'main_board': 'src.collect.plugins.main_board.MainBoardPlugin',
+    'memory': 'src.collect.plugins.memory.MemoryPlugin',
+    'nic': 'src.collect.plugins.nic.NicPlugin',
 }
 
 # 资产信息 API

@@ -1,4 +1,4 @@
-from src import convert
+from src.common import convert
 from .base import BasePlugin
 
 

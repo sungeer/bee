@@ -2,9 +2,9 @@ import os
 from concurrent.futures import ThreadPoolExecutor
 
 from src import settings
-from src.collector import collect_asset
-from src.logger import Logger
-from src.reporter import AssetAPI
+from src.collect.collector import collect_asset
+from src.common.logger import Logger
+from src.report.reporter import AssetAPI
 
 
 def run():

@@ -4,8 +4,8 @@ import time
 import requests
 
 from src import settings
-from src.logger import Logger
-from src.serialize import Json
+from src.common.logger import Logger
+from .serialize import Json
 
 
 class AssetAPI:

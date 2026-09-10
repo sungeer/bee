@@ -2,8 +2,8 @@ import os
 import traceback
 
 from src import settings
-from src.logger import Logger
-from src.response import BaseResponse
+from src.common.logger import Logger
+from src.common.response import BaseResponse
 
 
 class BasePlugin:
