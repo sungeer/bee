@@ -21,18 +21,18 @@ def run():
 
 def _agent():
     """采集本机资产并上报
-    通过本地 cert 文件识别新老资产
+    通过本地资产标识文件识别新老资产
     """
     result = collect_asset()
     if not result.status:
         return
 
     data = result.data
-    local_cert = _load_cert()
-    if local_cert is None:
-        _write_cert(data['hostname'])
-    elif local_cert != data['hostname']:
-        data['hostname'] = local_cert
+    asset_id = _load_asset_id()
+    if asset_id is None:
+        _write_asset_id(data['hostname'])
+    elif asset_id != data['hostname']:
+        data['hostname'] = asset_id
     AssetAPI().submit(data)
 
 
@@ -60,12 +60,12 @@ def _collect_one(api, hostname):
     api.submit(result.data)
 
 
-def _load_cert():
+def _load_asset_id():
     """读取本地标识文件
     返回主机名
     文件不存在或为空返回 None
     """
-    path = settings.CERT_FILE_PATH
+    path = settings.ASSET_ID_FILE
     if not os.path.exists(path):
         return None
     with open(path, encoding='utf-8') as f:
@@ -73,11 +73,11 @@ def _load_cert():
     return content.strip() or None
 
 
-def _write_cert(hostname):
+def _write_asset_id(hostname):
     """把主机名写入本地标识文件
     用于首次采集时向服务器注册
     """
-    path = settings.CERT_FILE_PATH
+    path = settings.ASSET_ID_FILE
     os.makedirs(os.path.dirname(path), exist_ok=True)
     with open(path, 'w', encoding='utf-8') as f:
         f.write(hostname)

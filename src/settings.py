@@ -15,8 +15,12 @@ AUTH_KEY_NAME = 'auth-key'
 ERROR_LOG_FILE = os.path.join(BASEDIR, 'logs', 'error.log')
 RUN_LOG_FILE = os.path.join(BASEDIR, 'logs', 'run.log')
 
-# Agent 模式保存服务器唯一 ID 的文件
-CERT_FILE_PATH = os.path.join(BASEDIR, 'config', 'cert')
+# 本机资产标识文件所在目录
+# 默认在项目 data/ 下；Linux 部署可用 BEE_DATA_DIR 指向 /var/lib/bee 等系统目录
+DATA_DIR = os.environ.get('BEE_DATA_DIR') or os.path.join(BASEDIR, 'data')
+
+# Agent 模式保存本机资产标识（首次采集时的 hostname）的文件
+ASSET_ID_FILE = os.path.join(DATA_DIR, 'asset_id')
 
 # 测试模式：为 True 时插件从 files/ 目录读取样例输出，不执行真实命令
 TEST_MODE = True
