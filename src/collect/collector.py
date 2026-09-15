@@ -1,7 +1,7 @@
 import importlib
 
 from src import settings
-from src.collect.plugins.basic import BasicPlugin
+from src.collect.plugins.system import SystemPlugin
 
 
 def collect_asset(hostname=None):
@@ -10,7 +10,7 @@ def collect_asset(hostname=None):
     :param hostname: agent 模式传空表示本机；ssh/salt 模式传要连接的远程主机名
     :return: BaseResponse(data=合并后的资产 dict)
     """
-    result = BasicPlugin(hostname).execute()
+    result = SystemPlugin(hostname).execute()
     if not result.status:
         return result
 

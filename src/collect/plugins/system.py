@@ -1,7 +1,7 @@
 from .base import BasePlugin
 
 
-class BasicPlugin(BasePlugin):
+class SystemPlugin(BasePlugin):
     """采集系统平台、版本与主机名"""
 
     def os_platform(self):
