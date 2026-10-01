@@ -5,17 +5,6 @@ from src.api import upload
 from src.collect import CollectError, collect
 
 
-def run():
-    try:
-        payload = collect()
-    except CollectError as e:
-        log.error('采集失败: %s' % e)
-        return
-
-    payload['hostname'] = _asset_id(payload['hostname'])
-    upload(payload)
-
-
 def _asset_id(collected_hostname):
     """以本地标识文件里的主机名为准。
 
@@ -33,3 +22,14 @@ def _asset_id(collected_hostname):
     with open(path, 'w', encoding='utf-8') as f:
         f.write(collected_hostname)
     return collected_hostname
+
+
+def run():
+    try:
+        payload = collect()
+    except CollectError as e:
+        log.error('采集失败: %s' % e)
+        return
+
+    payload['hostname'] = _asset_id(payload['hostname'])
+    upload(payload)
