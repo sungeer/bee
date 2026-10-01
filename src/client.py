@@ -1,4 +1,3 @@
-"""采集入口：采集 → 校正主机名 → 上报。"""
 import os
 
 from src import log, settings
