@@ -1,7 +1,9 @@
-"""MegaCli -PDList -aALL 输出解析。"""
+"""MegaCli -PDList -aALL 输出解析
+"""
+
 import re
 
-from src.parsers.fields import parse_fields
+from src.collector.parsers.fields import parse_fields
 
 # 每块物理盘之间以四个换行分隔
 _BLOCK_SEPARATOR = '\n\n\n\n'
@@ -17,7 +19,8 @@ _SIZE_RE = re.compile(r'([\d.]+)\s*GB')
 
 
 def parse(text):
-    """返回磁盘列表。"""
+    """返回磁盘列表
+    """
     disks = []
     for block in text.split(_BLOCK_SEPARATOR):
         fields = parse_fields(block, _DISK_FIELDS)
@@ -33,7 +36,9 @@ def parse(text):
 
 
 def _to_mb(value):
-    """'279.396 GB [0x22ecb25c Sectors]' -> 286102（MB 整数）"""
+    """'279.396 GB [0x22ecb25c Sectors]' ->
+    286102（MB 整数）
+    """
     match = _SIZE_RE.search(value)
     if not match:
         return None

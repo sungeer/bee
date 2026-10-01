@@ -1,8 +1,11 @@
-"""/proc/cpuinfo 解析。"""
+"""/proc/cpuinfo 解析
+"""
 
 
 def parse(text):
-    """返回 CPU 型号、物理颗数与逻辑处理器数。"""
+    """返回 CPU 型号
+    物理颗数与逻辑处理器数
+    """
     logical_processors = 0
     sockets = set()
     model = ''

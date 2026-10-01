@@ -6,5 +6,5 @@ pip install -r requirements.txt
 
 
 
-python -m pip install requests
+python -m pip install requests python-dotenv
 

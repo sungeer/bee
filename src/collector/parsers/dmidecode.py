@@ -1,7 +1,10 @@
-"""dmidecode 输出解析：主板信息（-t1）与内存条（-t17）。"""
+"""dmidecode 输出解析
+主板信息（-t1）与内存条（-t17）
+"""
+
 import re
 
-from src.parsers.fields import parse_fields
+from src.collector.parsers.fields import parse_fields
 
 # dmidecode 用这些占位符表示"没有这项信息"
 _PLACEHOLDERS = {'Not Specified', 'Unknown', 'None', 'Undefined'}
@@ -26,7 +29,9 @@ _NUMBER_RE = re.compile(r'\d+')
 
 
 def parse_main_board(text):
-    """返回主板信息；缺失的字段为 None。"""
+    """返回主板信息
+    缺失的字段为 None
+    """
     fields = parse_fields(text, _MAIN_BOARD_FIELDS)
     return {
         name: _clean(fields.get(name, ''))
@@ -35,10 +40,9 @@ def parse_main_board(text):
 
 
 def parse_memory(text):
-    """返回已安装的内存条列表。
-
-    空槽位（Size: No Module Installed）不上报 —— 它不是内存条，
-    报上去只会让消费端分不清"没装"和"容量为 0"。
+    """返回已安装的内存条列表
+    空槽位（Size: No Module Installed）不上报 —— 它不是内存条
+    报上去只会让消费端分不清"没装"和"容量为 0"
     """
     modules = []
     for block in text.split('Memory Device')[1:]:
@@ -58,7 +62,9 @@ def parse_memory(text):
 
 
 def _clean(value):
-    """占位符与空串一律转成 None，让"无"有唯一的表示。"""
+    """占位符与空串一律转成 None
+    让"无"有唯一的表示
+    """
     value = value.strip()
     if not value or value in _PLACEHOLDERS:
         return None
@@ -66,7 +72,9 @@ def _clean(value):
 
 
 def _parse_capacity(value):
-    """'1024 MB' -> 1024；'No Module Installed' -> None"""
+    """'1024 MB' -> 1024；
+    'No Module Installed' -> None
+    """
     match = _SIZE_RE.search(value)
     if not match:
         return None

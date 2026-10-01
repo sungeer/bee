@@ -1,0 +1,81 @@
+{
+  "schema_version": 1,
+  "collected_at": "2026-10-01T20:14:32+08:00",
+  "hostname": "qaz.com",
+  "os": {
+    "platform": "Linux",
+    "version": "CentOS release 6.6 (Final)"
+  },
+  "cpu": {
+    "model": "Intel(R) Xeon(R) CPU E5-2620 v2 @ 2.10GHz",
+    "sockets": 2,
+    "logical_processors": 24
+  },
+  "main_board": {
+    "manufacturer": "Parallels Software International Inc.",
+    "model": "Parallels Virtual Platform",
+    "serial": "Parallels-1A 1B CB 3B 64 66 4B 13 86 B0 86 FF 7E 2B 20 30"
+  },
+  "disks": [
+    {
+      "slot": "0",
+      "type": "SAS",
+      "capacity_mb": 286102,
+      "model": "SEAGATE ST300MM0006 LS08S0K2B5NV"
+    },
+    {
+      "slot": "1",
+      "type": "SAS",
+      "capacity_mb": 286102,
+      "model": "SEAGATE ST300MM0006 LS08S0K2B5AH"
+    },
+    {
+      "slot": "2",
+      "type": "SATA",
+      "capacity_mb": 488386,
+      "model": "S1SZNSAFA01085L Samsung SSD 850 PRO 512GB EXM01B6Q"
+    },
+    {
+      "slot": "3",
+      "type": "SATA",
+      "capacity_mb": 488386,
+      "model": "S1AXNSAF912433K Samsung SSD 840 PRO Series DXM06B0Q"
+    },
+    {
+      "slot": "4",
+      "type": "SATA",
+      "capacity_mb": 488386,
+      "model": "S1AXNSAF303909M Samsung SSD 840 PRO Series DXM05B0Q"
+    },
+    {
+      "slot": "5",
+      "type": "SATA",
+      "capacity_mb": 488386,
+      "model": "S1AXNSAFB00549A Samsung SSD 840 PRO Series DXM06B0Q"
+    }
+  ],
+  "memory": [
+    {
+      "slot": "DIMM #0",
+      "type": "DRAM",
+      "capacity_mb": 1024,
+      "speed_mhz": 667,
+      "manufacturer": null,
+      "serial": null
+    }
+  ],
+  "nics": [
+    {
+      "name": "eth0",
+      "up": true,
+      "mac": "00:1c:42:a5:57:7a",
+      "ipv4": [
+        {
+          "address": "10.211.55.4",
+          "netmask": "255.255.255.0"
+        }
+      ]
+    }
+  ],
+  "errors": {}
+}

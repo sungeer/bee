@@ -1,4 +1,7 @@
-"""ip link show / ip addr show 输出解析。"""
+"""ip link show
+ip addr show
+"""
+
 import re
 
 # '2: eth0: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 ...'
@@ -13,10 +16,9 @@ _EXCLUDED_PREFIXES = ('lo', 'pan', 'v')
 
 
 def parse(text):
-    """返回网卡列表。
-
+    """返回网卡列表
     输入是 ip link 与 ip addr 两段输出的拼接，同一接口会出现两次，
-    按接口名合并。
+    按接口名合并
     """
     interfaces = {}
     current = None
@@ -52,7 +54,13 @@ def parse(text):
 
 
 def _parse_inet(value):
-    """'10.211.55.4/24' -> {'address': '10.211.55.4', 'netmask': '255.255.255.0'}"""
+    """
+    '10.211.55.4/24' ->
+    {
+        'address': '10.211.55.4',
+        'netmask': '255.255.255.0'
+    }
+    """
     address, _, prefix = value.partition('/')
     return {'address': address, 'netmask': cidr_to_netmask(int(prefix))}
 
