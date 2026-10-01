@@ -1,9 +1,9 @@
 """采集入口：采集 → 校正主机名 → 上报。"""
 import os
 
-from . import log, settings
-from .api import upload
-from .collect import CollectError, collect
+from src import log, settings
+from src.api import upload
+from src.collect import CollectError, collect
 
 
 def run():

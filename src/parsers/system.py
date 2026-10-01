@@ -3,7 +3,7 @@
 与其他解析模块不同，它执行多条命令，且结果直接进 payload 顶层
 （不是 payload 下的某个采集项），所以不套用 parse(text) 的形状。
 """
-from ..runner import fetch
+from src.runner import fetch
 
 
 def read_identity():

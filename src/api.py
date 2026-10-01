@@ -4,7 +4,7 @@ import time
 
 import requests
 
-from . import log, settings
+from src import log, settings
 
 # 服务端返回码
 _CODE_SUCCESS = 1000

@@ -2,9 +2,9 @@
 from collections import namedtuple
 from datetime import datetime
 
-from . import log
-from .parsers import cpu, disk, dmidecode, nic, system
-from .runner import fetch
+from src import log
+from src.parsers import cpu, disk, dmidecode, nic, system
+from src.runner import fetch
 
 # 上报数据结构版本，结构变更时递增
 SCHEMA_VERSION = 1

@@ -1,7 +1,7 @@
 """MegaCli -PDList -aALL 输出解析。"""
 import re
 
-from .fields import parse_fields
+from src.parsers.fields import parse_fields
 
 # 每块物理盘之间以四个换行分隔
 _BLOCK_SEPARATOR = '\n\n\n\n'

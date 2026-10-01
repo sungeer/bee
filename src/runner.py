@@ -5,7 +5,7 @@
 import os
 import subprocess
 
-from . import settings
+from src import settings
 
 
 def fetch(commands, fixture):

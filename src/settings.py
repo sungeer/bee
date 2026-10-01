@@ -8,6 +8,8 @@ import os
 # 项目根目录（本文件位于 bee/ 下，父目录即项目根）
 BASEDIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
+VERSION = '26.1001.1731'
+
 # 资产 API
 ASSET_API = 'http://127.0.0.1:8000/api/asset'
 # API 认证：请求头名称与密钥

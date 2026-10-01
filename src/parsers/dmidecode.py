@@ -1,7 +1,7 @@
 """dmidecode 输出解析：主板信息（-t1）与内存条（-t17）。"""
 import re
 
-from .fields import parse_fields
+from src.parsers.fields import parse_fields
 
 # dmidecode 用这些占位符表示"没有这项信息"
 _PLACEHOLDERS = {'Not Specified', 'Unknown', 'None', 'Undefined'}

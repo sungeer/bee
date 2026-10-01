@@ -5,7 +5,7 @@
 import logging
 import os
 
-from . import settings
+from src import settings
 
 
 def _build_logger(name, path, level):
